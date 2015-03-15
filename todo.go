@@ -25,13 +25,11 @@ var (
 )
 
 type todo struct {
-	Name string
-	Desc string
+	Name, Desc string
 }
 
 func newTodo(content string) *todo {
-	var name string
-	var desc string
+	var name, desc string
 
 	idxs := reTodo.FindStringIndex(content)
 	matches := reName.FindAllStringIndex(content, -1)
