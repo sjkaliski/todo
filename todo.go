@@ -14,13 +14,14 @@ import (
 )
 
 var (
-	cwd, _   = os.Getwd()
-	dir      = flag.String("dir", "./", "directory to find todo's in")
-	reIsTodo = regexp.MustCompile(`(//|#|\*) (?i)todo.*`)
-	reTodo   = regexp.MustCompile(`(?i)todo`)
-	reName   = regexp.MustCompile(`\(([^\)]+)\)`)
-	raw      [][]byte
-	wg       sync.WaitGroup
+	cwd, _      = os.Getwd()
+	dir         = flag.String("dir", "./", "directory to find todo's in")
+	reIsTodo    = regexp.MustCompile(`(//|#|\*) (?i)todo.*`)
+	reTodo      = regexp.MustCompile(`(?i)todo`)
+	reName      = regexp.MustCompile(`\(([^\)]+)\)`)
+	defaultName = "Unknown"
+	raw         [][]byte
+	wg          sync.WaitGroup
 )
 
 type todo struct {
@@ -45,6 +46,7 @@ func newTodo(content string) *todo {
 		desc = content[matches[0][1]:]
 	} else {
 		desc = content[idxs[1]:]
+		name = defaultName
 	}
 
 	desc = strings.Trim(desc, " ")
